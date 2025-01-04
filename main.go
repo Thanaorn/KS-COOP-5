@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 	"teach/connector"
-	"teach/webhook/router"
-	"teach/webhook/service"
+	"teach/crud/router"
+	"teach/crud/service"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
@@ -30,9 +30,10 @@ func main() {
 		e.Logger.Fatal("Failed to select database")
 	}
 
-	webhookService := service.NewWebhookService(db)
+	fmt.Println("db = ", db)
 
-	router.NewWebhookRouter(e, webhookService)
+	CrudService := service.NewCrudService(db)
+	router.NewCrudRouter(e, CrudService)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }

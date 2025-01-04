@@ -1,6 +1,6 @@
 package model
 
-type data struct {
-	name string
-	age  int
+type TestData struct {
+	NameData string `json:"name"`
+	AgeData  int    `json:"age"`
 }

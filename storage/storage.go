@@ -6,15 +6,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"teach/model"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
-
-type data struct {
-	UserName string `json:"name"`
-	Age      int    `json:"age"`
-}
 
 type Storage struct {
 	storage *mongo.Collection
@@ -26,11 +22,12 @@ func NewStorage(db *mongo.Database) *Storage {
 	}
 }
 
-func (s Storage) FindAll(ctx context.Context) (*data, error) {
+func (s Storage) FindAll(ctx context.Context) ([]*model.TestData, error) {
 	filter := bson.D{{}}
+	fmt.Println("filter = ", filter)
 	cursor, err := s.storage.Find(ctx, filter)
-	if err == mongo.ErrNoDocuments {
-		fmt.Println(err)
+	if err != nil {
+		fmt.Println("err = ", err)
 	}
 	var results []bson.M
 	for cursor.Next(context.TODO()) {
@@ -48,9 +45,10 @@ func (s Storage) FindAll(ctx context.Context) (*data, error) {
 	if err != nil {
 		return nil, err
 	}
-	var data data
+	var data []*model.TestData
+	fmt.Println("jsonData = ", string(jsonData))
 	if err := json.Unmarshal(jsonData, &data); err != nil {
 		log.Fatalf("Error unmarshalling JSON data: %v", err)
 	}
-	return &data, nil
+	return data, nil
 }
