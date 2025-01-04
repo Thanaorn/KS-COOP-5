@@ -3,6 +3,7 @@ module teach
 go 1.23.4
 
 require (
+	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo v3.3.10+incompatible
 	go.mongodb.org/mongo-driver v1.17.1
 )
