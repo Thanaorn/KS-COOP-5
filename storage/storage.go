@@ -22,6 +22,42 @@ func NewStorage(db *mongo.Database) *Storage {
 	}
 }
 
+func (s Storage) FindByName(ctx context.Context, name string) (bool, error) {
+	var data model.TestData
+	err := s.storage.FindOne(ctx, bson.D{{"namedata", name}}).Decode(&data)
+	if err != nil {
+		fmt.Println("DOEST FIND NAME = ", name)
+		return false, err
+	}
+	fmt.Println("FIND NAME = ", name)
+	return true, nil
+}
+
+func (s Storage) UpdateAgeData(ctx context.Context, name string, age int) error {
+	filter := bson.D{{"namedata", name}}
+	update := bson.D{{"$set", bson.D{{"agedata", age}}}}
+	res, err := s.storage.UpdateOne(ctx, filter, update)
+	if err != nil {
+		return err
+	}
+	fmt.Println("res = ", res)
+	return nil
+}
+
+func (s Storage) InsertData(ctx context.Context, data model.TestData) error {
+	jsonbody, err := json.Marshal(data)
+	if err != nil {
+		fmt.Println("err = ", err)
+	}
+	fmt.Println("jsonbody = ", string(jsonbody))
+	result, err := s.storage.InsertOne(ctx, data)
+	if err != nil {
+		return err
+	}
+	fmt.Println("result = ", result)
+	return nil
+}
+
 func (s Storage) FindAll(ctx context.Context) ([]*model.TestData, error) {
 	filter := bson.D{{}}
 	fmt.Println("filter = ", filter)

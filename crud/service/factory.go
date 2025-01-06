@@ -13,10 +13,9 @@ type CrudService struct {
 }
 
 type ICrudService interface {
-	// CrudService() error
-	// createData(c echo.Context) error
-	ReadAllData(context.Context) ([]*model.TestData, error)
-	// updateData(c echo.Context) error
+	CreateData(ctx context.Context, data model.TestData) error
+	ReadAllData(ctx context.Context) ([]*model.TestData, error)
+	UpdateData(ctx context.Context, name string, age int) error
 	// deleteData(c echo.Context) error
 }
 

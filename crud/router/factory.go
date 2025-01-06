@@ -19,5 +19,9 @@ func NewCrudRouter(e *echo.Echo, cs cs.ICrudService) {
 	crudTestApi := e.Group("/test")
 
 	crudTestApi.GET("/readData", crud.readData)
+	crudTestApi.POST("/createData", crud.createData)
+	crudTestApi.POST("/updateData", crud.updateData)
+
+	// crudTestApi.DELETE("/deleteData", crud.deleteData)
 
 }
