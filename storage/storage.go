@@ -22,20 +22,31 @@ func NewStorage(db *mongo.Database) *Storage {
 	}
 }
 
-func (s Storage) FindByName(ctx context.Context, name string) (bool, error) {
-	var data model.TestData
-	err := s.storage.FindOne(ctx, bson.D{{"namedata", name}}).Decode(&data)
+func (s Storage) FindById(ctx context.Context, id int) (*model.UserData, error) {
+	var data model.UserData
+	err := s.storage.FindOne(ctx, bson.D{{"user_id", id}}).Decode(&data)
 	if err != nil {
-		fmt.Println("DOEST FIND NAME = ", name)
+		fmt.Println("DOEST FIND NAME = ", id)
+		return nil, err
+	}
+	fmt.Println("FIND NAME = ", id)
+	return &data, nil
+}
+
+func (s Storage) IsFind(ctx context.Context, id int) (bool, error) {
+	var data model.UserData
+	err := s.storage.FindOne(ctx, bson.D{{"user_id", id}}).Decode(&data)
+	if err != nil {
+		fmt.Println("DOEST FIND NAME = ", id)
 		return false, err
 	}
-	fmt.Println("FIND NAME = ", name)
+	fmt.Println("FIND NAME = ", id)
 	return true, nil
 }
 
-func (s Storage) UpdateAgeData(ctx context.Context, name string, age int) error {
-	filter := bson.D{{"namedata", name}}
-	update := bson.D{{"$set", bson.D{{"agedata", age}}}}
+func (s Storage) UpdateAgeData(ctx context.Context, id int, age int) error {
+	filter := bson.D{{"user_id", id}}
+	update := bson.D{{"$set", bson.D{{"user_age", age}}}}
 	res, err := s.storage.UpdateOne(ctx, filter, update)
 	if err != nil {
 		return err
@@ -44,7 +55,7 @@ func (s Storage) UpdateAgeData(ctx context.Context, name string, age int) error 
 	return nil
 }
 
-func (s Storage) InsertData(ctx context.Context, data model.TestData) error {
+func (s Storage) InsertData(ctx context.Context, data model.UserData) error {
 	jsonbody, err := json.Marshal(data)
 	if err != nil {
 		fmt.Println("err = ", err)
@@ -58,7 +69,7 @@ func (s Storage) InsertData(ctx context.Context, data model.TestData) error {
 	return nil
 }
 
-func (s Storage) FindAll(ctx context.Context) ([]*model.TestData, error) {
+func (s Storage) FindAll(ctx context.Context) ([]*model.UserData, error) {
 	filter := bson.D{{}}
 	fmt.Println("filter = ", filter)
 	cursor, err := s.storage.Find(ctx, filter)
@@ -81,10 +92,20 @@ func (s Storage) FindAll(ctx context.Context) ([]*model.TestData, error) {
 	if err != nil {
 		return nil, err
 	}
-	var data []*model.TestData
+	var data []*model.UserData
 	fmt.Println("jsonData = ", string(jsonData))
 	if err := json.Unmarshal(jsonData, &data); err != nil {
 		log.Fatalf("Error unmarshalling JSON data: %v", err)
 	}
 	return data, nil
+}
+
+func (s Storage) DeleteDataId(ctx context.Context, id int) error {
+	filter := bson.D{{"user_id", id}}
+	res, err := s.storage.DeleteOne(ctx, filter)
+	if err != nil {
+		return err
+	}
+	fmt.Println("res = ", res)
+	return nil
 }
