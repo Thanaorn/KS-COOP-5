@@ -81,6 +81,7 @@ func (crud CrudRouters) readDataId(c echo.Context) error {
 }
 
 func (crud CrudRouters) updateData(c echo.Context) error {
+	ctx := c.Request().Context()
 	request := new(model.UserData)
 	bodyBytes, err := io.ReadAll(c.Request().Body)
 	if err != nil {
@@ -96,14 +97,14 @@ func (crud CrudRouters) updateData(c echo.Context) error {
 			"message": "invalid request body",
 		})
 	}
-	if request.Name == "" || request.Age == 0 {
+	if request.Age == 0 {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"code":    http.StatusInternalServerError,
 			"message": "invalid request body",
 		})
 	}
 
-	err = crud.CrudService.UpdateData(context.TODO(), request.Id, request.Age)
+	err = crud.CrudService.UpdateData(ctx, request.Id, request.Age)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"code":    http.StatusInternalServerError,
