@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"teach/connector"
 	"teach/webhook/router"
@@ -28,6 +29,15 @@ func main() {
 	db := mongodb.SelectDB(os.Getenv("DATABASE_NAME"))
 	if db == nil {
 		e.Logger.Fatal("Failed to select database")
+	}
+
+	redis := connector.NewRedisClient(
+		"",
+		os.Getenv("REDIS_ADDRESS"),
+		os.Getenv("REDIS_PASSWORD"),
+	)
+	if _, err := redis.Ping().Result(); err != nil {
+		log.Fatalln("Error connecting to Redis")
 	}
 
 	webhookService := service.NewWebhookService(db)
