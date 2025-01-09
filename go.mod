@@ -6,10 +6,9 @@ require (
 	github.com/go-redis/redis/v8 v8.11.5
 	github.com/joho/godotenv v1.5.1
 	github.com/labstack/echo v3.3.10+incompatible
+	github.com/labstack/echo/v4 v4.13.3
 	go.mongodb.org/mongo-driver v1.17.1
 )
-
-require github.com/stretchr/testify v1.10.0 // indirect
 
 require (
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -32,4 +31,5 @@ require (
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	golang.org/x/text v0.21.0 // indirect
+	golang.org/x/time v0.8.0 // indirect
 )

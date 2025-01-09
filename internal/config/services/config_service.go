@@ -5,12 +5,22 @@ import (
 	"teach/model"
 )
 
-func (cs ConfigService) GetUserRedisService(ctx context.Context, userInformation model.UserInformationRequest) error {
-	err := cs.httpclient.RedisStorage.SetUserInformation(userInformation.UserID, model.InitInformationRedis{
-		UserID: userInformation.UserID,
-		Name:   userInformation.Name,
-		Age:    userInformation.Age,
-	})
+func (cs ConfigService) GetUserRedisService(
+	ctx context.Context,
+	userID string) (
+	*model.InitInformationRedis, error) {
+	userInformation, err := cs.RedisStorage.GetUserInformation(userID)
+	if err != nil {
+		return nil, err
+	}
+	return userInformation, nil
+}
+
+func (cs ConfigService) SetUserRedisService(
+	ctx context.Context,
+	userID string,
+	info model.InitInformationRedis) error {
+	err := cs.RedisStorage.SetUserInformation(userID, info)
 	if err != nil {
 		return err
 	}

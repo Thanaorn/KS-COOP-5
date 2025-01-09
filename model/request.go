@@ -3,5 +3,9 @@ package model
 type UserInformationRequest struct {
 	UserID string `json:"user_id"`
 	Name   string `json:"name"`
-	Age    int    `json:"age"`
+	Age    string `json:"age"`
+}
+
+type UserIDInformationRequest struct {
+	UserId string `json:"user_id"`
 }

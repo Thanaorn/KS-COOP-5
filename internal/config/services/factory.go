@@ -5,7 +5,6 @@ import (
 	"teach/internal/httpclient"
 	"teach/model"
 	"teach/pkg/connector"
-
 	storage "teach/storage"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -14,10 +13,12 @@ import (
 type ConfigService struct {
 	ConfigStorage *storage.ConfigStorage
 	httpclient    *httpclient.HTTPClient
+	RedisStorage  *storage.RedisStorage
 }
 
 type IConfigService interface {
-	GetUserRedisService(ctx context.Context, userInformation model.UserInformationRequest) error
+	GetUserRedisService(ctx context.Context, userID string) (*model.InitInformationRedis, error)
+	SetUserRedisService(ctx context.Context, userID string, info model.InitInformationRedis) error
 }
 
 func NewConfigService(
@@ -27,5 +28,7 @@ func NewConfigService(
 ) IConfigService {
 	return &ConfigService{
 		ConfigStorage: storage.NewConfigStorage(db),
+		RedisStorage:  storage.NewRedisStorage(r),
+		httpclient:    ht,
 	}
 }

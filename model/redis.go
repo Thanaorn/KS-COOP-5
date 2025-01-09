@@ -5,7 +5,7 @@ import "encoding/json"
 type InitInformationRedis struct {
 	UserID string `json:"user_id"`
 	Name   string `json:"name"`
-	Age    int    `json:"age"`
+	Age    string `json:"age"`
 }
 
 func (i InitInformationRedis) ToJson() string {
