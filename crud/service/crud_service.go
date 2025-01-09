@@ -46,13 +46,13 @@ func (cs CrudService) UpdateData(ctx context.Context, id int, age int) error {
 	}
 
 	if !isFind {
-		return fmt.Errorf("%s not found", id)
+		return fmt.Errorf("%v not found", id)
 	} else {
 		err := cs.storage.UpdateAgeData(ctx, id, age)
 		if err != nil {
 			return err
 		}
-		fmt.Println(fmt.Sprintf("Updated %s's age to %d", id, age))
+		fmt.Println(fmt.Sprintf("Updated %v's age to %v", id, age))
 	}
 
 	return nil
