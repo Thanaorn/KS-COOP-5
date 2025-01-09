@@ -3,9 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
-	"teach/connector"
-	"teach/crud/router"
-	"teach/crud/service"
+	"teach/internal/crud/router"
+	"teach/internal/crud/service"
+	"teach/pkg/connector"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"

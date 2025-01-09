@@ -1,7 +1,7 @@
 package router
 
 import (
-	cs "teach/crud/service"
+	cs "teach/internal/crud/service"
 
 	"github.com/labstack/echo"
 )
@@ -23,6 +23,5 @@ func NewCrudRouter(e *echo.Echo, cs cs.ICrudService) {
 	crudTestApi.POST("/createData", crud.createData)
 	crudTestApi.POST("/updateData", crud.updateData)
 	crudTestApi.DELETE("/deleteData/:id", crud.deleteData)
-
 
 }
