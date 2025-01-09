@@ -14,7 +14,6 @@ type IWebhookService interface {
 	WebhookService() error
 }
 
-
 func NewWebhookService(
 	db *mongo.Database,
 ) IWebhookService {

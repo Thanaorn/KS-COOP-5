@@ -2,7 +2,7 @@ package router
 
 import (
 	"net/http"
-	ws "teach/webhook/service"
+	ws "teach/internal/webhook/service"
 
 	"github.com/labstack/echo"
 )

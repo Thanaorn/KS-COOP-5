@@ -20,9 +20,18 @@ type Storage struct {
 	storage *mongo.Collection
 }
 
+type ConfigStorage struct {
+	ConfigCollection *mongo.Collection
+}
+
 func NewStorage(db *mongo.Database) *Storage {
 	return &Storage{
 		storage: db.Collection(os.Getenv("MONGO_COLLECTION")),
+	}
+}
+func NewConfigStorage(db *mongo.Database) *ConfigStorage {
+	return &ConfigStorage{
+		ConfigCollection: db.Collection(os.Getenv("MONGO_COLLECTION")),
 	}
 }
 

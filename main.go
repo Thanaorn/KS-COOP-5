@@ -3,10 +3,15 @@ package main
 import (
 	"fmt"
 	"log"
+	"net/http"
 	"os"
-	"teach/connector"
-	"teach/webhook/router"
-	"teach/webhook/service"
+	"teach/internal/httpclient"
+	"teach/internal/webhook/router"
+	"teach/internal/webhook/service"
+
+	cr "teach/internal/config/routers"
+	"teach/internal/config/services"
+	"teach/pkg/connector"
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo"
@@ -39,10 +44,13 @@ func main() {
 	if _, err := redis.Ping().Result(); err != nil {
 		log.Fatalln("Error connecting to Redis")
 	}
+	h := httpclient.NewHTTPClient(http.Client{}, db, redis)
 
 	webhookService := service.NewWebhookService(db)
+	configService := services.NewConfigService(redis, db, h)
+
+	cr.NewConfigRouters(e, configService)
 
 	router.NewWebhookRouter(e, webhookService)
-
 	e.Logger.Fatal(e.Start(":8080"))
 }
