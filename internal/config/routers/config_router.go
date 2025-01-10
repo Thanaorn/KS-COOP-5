@@ -23,8 +23,7 @@ func (cr ConfigRouters) GetUsers(c echo.Context) error {
 			Status:  http.StatusUnprocessableEntity,
 		})
 	}
-
-	return c.JSON(http.StatusOK, model.UserInformationResponse{
+	response := model.UserInformationResponse{
 		UserID: info.UserID,
 		Name:   info.Name,
 		Age:    info.Age,
@@ -37,7 +36,9 @@ func (cr ConfigRouters) GetUsers(c echo.Context) error {
 				Zipcode: info.Contact.Address.Zipcode,
 			},
 		},
-	})
+	}
+
+	return c.JSON(http.StatusOK, response)
 
 }
 
