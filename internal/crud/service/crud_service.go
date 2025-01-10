@@ -1,76 +1,26 @@
 package service
 
-import (
-	"context"
-	"fmt"
+// func (cs CrudService) ReadAllData(ctx context.Context) ([]*model.UserData, error) {
 
-	"teach/model"
-)
+// 	return data, nil
+// }
 
-func (cs CrudService) ReadAllData(ctx context.Context) ([]*model.UserData, error) {
+// func (cs CrudService) ReadDataId(ctx context.Context, id int) (*model.UserData, error) {
 
-	data, err := cs.storage.FindAll(ctx)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("data = ", data)
+// 	return data, nil
+// }
 
-	return data, nil
-}
+// func (cs CrudService) CreateData(ctx context.Context, data model.UserData) error {
 
-func (cs CrudService) ReadDataId(ctx context.Context, id int) (*model.UserData, error) {
+// 	return nil
+// }
 
-	data, err := cs.storage.FindById(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("data = ", data)
+// func (cs CrudService) UpdateData(ctx context.Context, id int, age int) error {
 
-	return data, nil
-}
+// 	return nil
+// }
 
-func (cs CrudService) CreateData(ctx context.Context, data model.UserData) error {
+// func (cs CrudService) DeleteData(c context.Context, id int) error {
 
-	err := cs.storage.InsertData(ctx, data)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (cs CrudService) UpdateData(ctx context.Context, id int, age int) error {
-	isFind, err := cs.storage.IsFind(ctx, id)
-	if err != nil {
-		return err
-	}
-
-	if !isFind {
-		return fmt.Errorf("%v not found", id)
-	} else {
-		err := cs.storage.UpdateAgeData(ctx, id, age)
-		if err != nil {
-			return err
-		}
-		fmt.Println(fmt.Sprintf("Updated %v's age to %v", id, age))
-	}
-
-	return nil
-}
-
-func (cs CrudService) DeleteData(c context.Context, id int) error {
-	isFind, err := cs.storage.IsFind(c, id)
-	if err != nil {
-		return err
-	}
-	if isFind {
-		err = cs.storage.DeleteDataId(c, id)
-		if err != nil {
-			return err
-		}
-	} else {
-		return fmt.Errorf("%v not found", id)
-	}
-
-	return nil
-}
+// 	return nil
+// }
