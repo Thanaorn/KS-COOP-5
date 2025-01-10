@@ -45,12 +45,6 @@ func main() {
 	}
 	//Implement redis connector
 
-	// h := httpclient.NewHTTPClient(http.Client{}, db, redis)
-
-	// configService := services.NewConfigService(redis, db, h)
-
-	// cr.NewConfigRouters(e, configService)
-
 	fmt.Println("All registered routes:")
 	data := e.Routes()
 	for i := 0; i < len(data); i++ {
