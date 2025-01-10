@@ -1,8 +1,8 @@
 package storage
 
 import (
-	"encoding/json"
-	"fmt"
+	// "encoding/json"
+	// "fmt"
 	"teach/model"
 	"teach/pkg/connector"
 )
@@ -18,31 +18,20 @@ func NewRedisStorage(redis *connector.Redis) *RedisStorage {
 }
 
 func (rs RedisStorage) SetUserInformation(userID string, info model.InitInformationRedis) error {
-	err := rs.Redis.Set("information_"+userID, info.ToJson(), 3600)
-	if err != nil {
-		return err
-	}
+	//Implement
+
 	return nil
 
 }
 
 func (rs RedisStorage) GetUserInformation(userID string) (*model.InitInformationRedis, error) {
-	cmd := rs.Redis.Get("information_" + userID)
-	var info model.InitInformationRedis
-	val, err := cmd.Result()
-	if err != nil {
-		return nil, nil
-	}
-	err = json.Unmarshal([]byte(val), &info)
-	if err != nil {
-		return nil, fmt.Errorf("error unmarshalling JSON data: %v", err)
-	}
-	return &info, nil
+	//Implement
+
+	return nil, nil
 }
 
 func (rs RedisStorage) ClearUserInformation(userID string) error {
-
-	rs.Redis.Clear("information_" + userID)
+	//Implement
 
 	return nil
 
