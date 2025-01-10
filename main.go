@@ -23,9 +23,10 @@ func main() {
 	e.Use(middleware.RequestID())
 
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*", "http://localhost:3000"},
+		AllowOrigins: []string{"*", "http://localhost:8080"},
 		AllowMethods: []string{http.MethodGet, http.MethodPut, http.MethodPost, http.MethodDelete},
 	}))
+
 	wd, _ := os.Getwd()
 	if err := godotenv.Load(wd + "/.env"); err != nil {
 		fmt.Println("Error loading .env file.")
