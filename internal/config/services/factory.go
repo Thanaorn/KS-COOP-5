@@ -1,35 +1,26 @@
 package services
 
-import (
-	"context"
-	"teach/internal/httpclient"
-	"teach/model"
-	"teach/pkg/connector"
-	storage "teach/storage"
+// "context"
+// "teach/internal/httpclient"
+// "teach/model"
+// "teach/pkg/connector"
+// storage "teach/storage"
 
-	"go.mongodb.org/mongo-driver/mongo"
-)
+// "go.mongodb.org/mongo-driver/mongo"
 
 type ConfigService struct {
-	ConfigStorage *storage.ConfigStorage
-	httpclient    *httpclient.HTTPClient
-	RedisStorage  *storage.RedisStorage
+	//Implement
 }
 
 type IConfigService interface {
-	GetUserRedisService(ctx context.Context, userID string) (*model.InitInformationRedis, error)
-	SetUserRedisService(ctx context.Context, userID string, info model.InitInformationRedis) error
-	DeleteUserRedisService(ctx context.Context, userID string) error
+	//Implement interface
 }
 
 func NewConfigService(
-	r *connector.Redis,
-	db *mongo.Database,
-	ht *httpclient.HTTPClient,
+//Implement
 ) IConfigService {
-	return &ConfigService{
-		ConfigStorage: storage.NewConfigStorage(db),
-		RedisStorage:  storage.NewRedisStorage(r),
-		httpclient:    ht,
-	}
+
+	//Implement
+
+	return &ConfigService{}
 }

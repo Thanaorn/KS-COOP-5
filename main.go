@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"log"
+	//"log"
 	"net/http"
 	"os"
-	"teach/internal/httpclient"
 
-	cr "teach/internal/config/routers"
-	"teach/internal/config/services"
+	//"teach/internal/httpclient"
+
+	//cr "teach/internal/config/routers"
+	//"teach/internal/config/services"
 	"teach/pkg/connector"
 
 	"github.com/joho/godotenv"
@@ -42,23 +43,13 @@ func main() {
 	if db == nil {
 		e.Logger.Fatal("Failed to select database")
 	}
+	//Implement redis connector
 
-	redis := connector.NewRedisClient(
-		"",
-		os.Getenv("REDIS_ADDRESS"),
-		os.Getenv("REDIS_PASSWORD"),
-	)
-	if _, err := redis.Ping().Result(); err != nil {
-		log.Fatalln("Error connecting to Redis")
-	}
-	h := httpclient.NewHTTPClient(http.Client{}, db, redis)
+	// h := httpclient.NewHTTPClient(http.Client{}, db, redis)
 
-	// webhookService := service.NewWebhookService(db)
-	configService := services.NewConfigService(redis, db, h)
+	// configService := services.NewConfigService(redis, db, h)
 
-	cr.NewConfigRouters(e, configService)
-
-	// router.NewWebhookRouter(e, webhookService)
+	// cr.NewConfigRouters(e, configService)
 
 	fmt.Println("All registered routes:")
 	data := e.Routes()

@@ -1,25 +1,17 @@
 package model
 
 type Address struct {
-	Street  string `json:"street"`
-	City    string `json:"city"`
-	Zipcode string `json:"zipcode"`
+	//Implement
 }
 
 type Contact struct {
-	Email   string  `json:"email"`
-	Phone   string  `json:"phone"`
-	Address Address `json:"address"`
+	//Implement
 }
 
 type UserInformationRequest struct {
-	UserID  string  `json:"user_id"`
-	Name    string  `json:"name"`
-	Age     string  `json:"age"`
-	IDCard  string  `json:"id_card"`
-	Contact Contact `json:"contact"`
+	//Implement
 }
 
 type UserIDInformationRequest struct {
-	UserId string `json:"user_id"`
+	//Implement
 }

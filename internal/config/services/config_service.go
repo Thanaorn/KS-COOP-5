@@ -1,38 +1,30 @@
 package services
 
 import (
-	"context"
+	//"context"
 	"teach/model"
 )
 
 func (cs ConfigService) GetUserRedisService(
-	ctx context.Context,
-	userID string) (
+// Implement
+) (
 	*model.InitInformationRedis, error) {
-	userInformation, err := cs.RedisStorage.GetUserInformation(userID)
-	if err != nil {
-		return nil, err
-	}
-	return userInformation, nil
+	//Implement
+	return nil, nil
 }
 
 func (cs ConfigService) SetUserRedisService(
-	ctx context.Context,
-	userID string,
-	info model.InitInformationRedis) error {
-	err := cs.RedisStorage.SetUserInformation(userID, info)
-	if err != nil {
-		return err
-	}
+// Implement
+) error {
+
+	//Implement
 	return nil
 }
 
 func (cs ConfigService) DeleteUserRedisService(
-	ctx context.Context,
-	userID string) error {
-	err := cs.RedisStorage.ClearUserInformation(userID)
-	if err != nil {
-		return err
-	}
+// Implement
+) error {
+
+	//Implement
 	return nil
 }
