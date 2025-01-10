@@ -19,6 +19,7 @@ type ConfigService struct {
 type IConfigService interface {
 	GetUserRedisService(ctx context.Context, userID string) (*model.InitInformationRedis, error)
 	SetUserRedisService(ctx context.Context, userID string, info model.InitInformationRedis) error
+	DeleteUserRedisService(ctx context.Context, userID string) error
 }
 
 func NewConfigService(

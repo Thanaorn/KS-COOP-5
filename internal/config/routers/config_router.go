@@ -24,10 +24,19 @@ func (cr ConfigRouters) GetUsers(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, model.UserInformationRespond{
+	return c.JSON(http.StatusOK, model.UserInformationResponse{
 		UserID: info.UserID,
 		Name:   info.Name,
 		Age:    info.Age,
+		Contact: model.ContactResponse{
+			Email: info.Contact.Email,
+			Phone: info.Contact.Phone,
+			Address: model.AddressResponse{
+				Street:  info.Contact.Address.Street,
+				City:    info.Contact.Address.City,
+				Zipcode: info.Contact.Address.Zipcode,
+			},
+		},
 	})
 
 }
@@ -52,9 +61,15 @@ func (cr ConfigRouters) SetUsers(c echo.Context) error {
 			Status:  http.StatusBadRequest,
 		})
 	}
-	if request.Age == "0" || request.Age == "" {
+	if request.Age == "" {
 		return c.JSON(http.StatusBadRequest, model.StatusResponse{
-			Message: "Age must be greater than 0",
+			Message: "Age is required",
+			Status:  http.StatusBadRequest,
+		})
+	}
+	if request.IDCard == "" {
+		return c.JSON(http.StatusBadRequest, model.StatusResponse{
+			Message: "IDCard is required",
 			Status:  http.StatusBadRequest,
 		})
 	}
@@ -64,6 +79,15 @@ func (cr ConfigRouters) SetUsers(c echo.Context) error {
 		UserID: request.UserID,
 		Name:   request.Name,
 		Age:    request.Age,
+		Contact: model.ContactRedis{
+			Email: request.Contact.Email,
+			Phone: request.Contact.Phone,
+			Address: model.AddressRedis{
+				Street:  request.Contact.Address.Street,
+				City:    request.Contact.Address.City,
+				Zipcode: request.Contact.Address.Zipcode,
+			},
+		},
 	}
 
 	err := cr.ConfigService.SetUserRedisService(context, info.UserID, info)
@@ -76,6 +100,30 @@ func (cr ConfigRouters) SetUsers(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, model.StatusResponse{
 		Message: "User information saved successfully",
+		Status:  http.StatusOK,
+	})
+}
+
+func (cr ConfigRouters) DeleteUsers(c echo.Context) error {
+
+	request := new(model.UserIDInformationRequest)
+	if err := c.Bind(request); err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, model.StatusResponse{
+			Message: err.Error(),
+			Status:  http.StatusUnprocessableEntity,
+		})
+	}
+	context := c.Request().Context()
+	err := cr.ConfigService.DeleteUserRedisService(context, request.UserId)
+	if err != nil {
+		return c.JSON(http.StatusUnprocessableEntity, model.StatusResponse{
+			Message: err.Error(),
+			Status:  http.StatusUnprocessableEntity,
+		})
+	}
+
+	return c.JSON(http.StatusOK, model.StatusResponse{
+		Message: "User information deleted successfully",
 		Status:  http.StatusOK,
 	})
 }

@@ -22,5 +22,6 @@ func NewConfigRouters(e *echo.Echo, ss services.IConfigService) {
 
 	gConfig.GET("/users", cr.GetUsers)
 	gConfig.POST("/set/users", cr.SetUsers)
+	gConfig.POST("/delete/users", cr.DeleteUsers)
 
 }

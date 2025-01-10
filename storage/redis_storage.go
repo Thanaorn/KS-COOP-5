@@ -39,3 +39,11 @@ func (rs RedisStorage) GetUserInformation(userID string) (*model.InitInformation
 	}
 	return &info, nil
 }
+
+func (rs RedisStorage) ClearUserInformation(userID string) error {
+
+	rs.Redis.Clear("information_" + userID)
+
+	return nil
+
+}

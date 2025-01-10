@@ -26,3 +26,13 @@ func (cs ConfigService) SetUserRedisService(
 	}
 	return nil
 }
+
+func (cs ConfigService) DeleteUserRedisService(
+	ctx context.Context,
+	userID string) error {
+	err := cs.RedisStorage.ClearUserInformation(userID)
+	if err != nil {
+		return err
+	}
+	return nil
+}
