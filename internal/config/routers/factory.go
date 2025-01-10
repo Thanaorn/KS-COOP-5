@@ -20,8 +20,8 @@ func NewConfigRouters(e *echo.Echo, ss services.IConfigService) {
 	}
 	gConfig := e.Group("/config")
 
-	gConfig.GET("/users", cr.GetUsers)
 	gConfig.POST("/set/users", cr.SetUsers)
+	gConfig.GET("/get/users", cr.GetUsers)
 	gConfig.POST("/delete/users", cr.DeleteUsers)
 
 }
